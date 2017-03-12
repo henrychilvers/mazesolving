@@ -14,7 +14,7 @@ class FibHeap:
             return self == self.next
 
         def insert(self, node):
-            if node == None:
+            if node is None:
                 return
 
             self.next.previous = node.previous
@@ -28,7 +28,7 @@ class FibHeap:
             self.next = self.previous = self
 
         def addchild(self, node):
-            if self.child == None:
+            if self.child is None:
                 self.child = node
             else:
                 self.child.insert(node)
@@ -43,10 +43,12 @@ class FibHeap:
             if node.issingle():
                 if self.child != node:
                     raise AssertionError("Cannot remove a node that is not a child")
+
                 self.child = None
             else:
                 if self.child == node:
                     self.child = node.next
+
                 node.remove()
 
             node.parent = None
@@ -69,39 +71,44 @@ class FibHeap:
         # return node
 
     def _insertnode(self, node):
-        if self.minnode == None:
+        if self.minnode is None:
             self.minnode = node
         else:
             self.minnode.insert(node)
+
             if node.key < self.minnode.key:
                 self.minnode = node
                 # return node
 
     def minimum(self):
-        if self.minnode == None:
+        if self.minnode is None:
             raise AssertionError("Cannot return minimum of empty heap")
+
         return self.minnode
 
     def merge(self, heap):
         self.minnode.insert(heap.minnode)
-        if self.minnode == None or (heap.minnode != None and heap.minnode.key < self.minnode.key):
+
+        if self.minnode is None or (heap.minnode is not None and heap.minnode.key < self.minnode.key):
             self.minnode = heap.minnode
+
         self.count += heap.count
 
     def removeminimum(self):
-        if self.minnode == None:
+        if self.minnode is None:
             raise AssertionError("Cannot remove from an empty heap")
 
         removed_node = self.minnode
         self.count -= 1
 
         # 1: Assign all old root children as new roots
-        if self.minnode.child != None:
+        if self.minnode.child is not None:
             c = self.minnode.child
 
             while True:
                 c.parent = None
                 c = c.next
+
                 if c == self.minnode.child:
                     break
 
@@ -112,6 +119,7 @@ class FibHeap:
         if self.minnode.next == self.minnode:
             if self.count != 0:
                 raise AssertionError("Heap error: Expected 0 keys, count is " + str(self.count))
+
             self.minnode = None
             return removed_node
 
@@ -125,8 +133,10 @@ class FibHeap:
             currentdegree = currentpointer.degree
             current = currentpointer
             currentpointer = currentpointer.next
-            while degreeroots[currentdegree] != None:
+
+            while degreeroots[currentdegree] is not None:
                 other = degreeroots[currentdegree]
+
                 # Swap if required
                 if current.key > other.key:
                     temp = other
@@ -139,16 +149,19 @@ class FibHeap:
                 currentdegree += 1
 
             degreeroots[currentdegree] = current
+
             if currentpointer == self.minnode:
                 break
 
         # 3: Remove current root and find new minnode
         self.minnode = None
         newmaxdegree = 0
+
         for d in range(0, logsize):
-            if degreeroots[d] != None:
+            if degreeroots[d] is not None:
                 degreeroots[d].next = degreeroots[d].previous = degreeroots[d]
                 self._insertnode(degreeroots[d])
+
                 if (d > newmaxdegree):
                     newmaxdegree = d
 
@@ -168,7 +181,7 @@ class FibHeap:
 
         parent = node.parent
 
-        if parent == None:
+        if parent is None:
             if newkey < self.minnode.key:
                 self.minnode = node
             return
@@ -179,7 +192,7 @@ class FibHeap:
             parent.removechild(node)
             self._insertnode(node)
 
-            if parent.parent == None:
+            if parent.parent is None:
                 break
             elif parent.mark == False:
                 parent.mark

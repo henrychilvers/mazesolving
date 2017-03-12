@@ -7,7 +7,8 @@ class SolverFactory:
         self.Default = "breadthfirst"
         self.Choices = ["breadthfirst", "depthfirst", "dijkstra", "astar", "leftturn"]
 
-    def createsolver(self, type):
+    @staticmethod
+    def createsolver(type):
         if type == "leftturn":
             import leftturn
             return ["Left turn only", leftturn.solve]

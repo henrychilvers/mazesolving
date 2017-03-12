@@ -1,5 +1,6 @@
 from FibonacciHeap import FibHeap
-from priority_queue import FibPQ, HeapPQ, QueuePQ
+from priority_queue import HeapPQ
+
 
 # This implementation of A* is almost identical to the Dijkstra implementation. So for clarity I've removed all
 # comments, and only added those Specifically showing the difference between dijkstra and A*
@@ -9,7 +10,6 @@ def solve(maze):
     total = maze.width * maze.height
 
     start = maze.start
-    startpos = start.Position
     end = maze.end
     endpos = end.Position
 
@@ -52,11 +52,11 @@ def solve(maze):
             break
 
         for v in u.Neighbours:
-            if v != None:
+            if v is not None:
                 vpos = v.Position
                 vposindex = vpos[0] * width + vpos[1]
 
-                if visited[vposindex] == False:
+                if not visited[vposindex]:
                     d = abs(vpos[0] - upos[0]) + abs(vpos[1] - upos[1])
 
                     # New path cost to v is distance to u + extra. Some descriptions of A* call this the g cost.
@@ -73,7 +73,7 @@ def solve(maze):
                     if newdistance < distances[vposindex]:
                         vnode = nodeindex[vposindex]
 
-                        if vnode == None:
+                        if vnode is None:
                             # V goes into the priority queue with a cost of g + f. So if it's moving closer to the
                             # end, it'll get higher priority than some other nodes. The order we visit nodes is a
                             # trade-off between a short path, and moving closer to the goal.
@@ -91,14 +91,13 @@ def solve(maze):
                             distances[vposindex] = newdistance
                             prev[vposindex] = u
 
-
         visited[uposindex] = True
 
     from collections import deque
 
     path = deque()
     current = end
-    while current != None:
+    while current is not None:
         path.appendleft(current)
         current = prev[current.Position[0] * width + current.Position[1]]
 

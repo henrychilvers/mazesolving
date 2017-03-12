@@ -16,6 +16,15 @@ Some example mazes are included in the repository. These were generated either b
 - One white square exists on the top row of the image, and is the start of the maze.
 - One white square exists on the bottom row of the image, and is the end of the maze.
 
+## Usage
+usage: solve.py [-h] [-m [{breadthfirst,depthfirst,dijkstra,astar,leftturn}]]
+                input_file
+
+## Requirements
+- Pillow (formerly Pil) "pip install Pillow"
+- GraphViz (required for Bprofile) http://www.graphviz.org/Download..php
+- Bprofile "pip install Bprofile"
+
 ## Notes
 This was just a side project I did for fun over a couple of evenings, I'm sure there are many improvements and extensions you could make if you wanted to. Some things to note:
 

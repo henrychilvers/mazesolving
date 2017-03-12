@@ -1,5 +1,5 @@
 from FibonacciHeap import FibHeap
-from priority_queue import FibPQ, HeapPQ, QueuePQ
+from priority_queue import HeapPQ
 
 
 def solve(maze):
@@ -9,7 +9,7 @@ def solve(maze):
 
     # Start node, end node
     start = maze.start
-    startpos = start.Position
+    # startpos = start.Position
     end = maze.end
     endpos = end.Position
 
@@ -67,11 +67,11 @@ def solve(maze):
             break
 
         for v in u.Neighbours:
-            if v != None:
+            if v is not None:
                 vpos = v.Position
                 vposindex = vpos[0] * width + vpos[1]
 
-                if visited[vposindex] == False:
+                if not visited[vposindex]:
                     # The extra distance from where we are (upos) to the neighbour (vpos) - this is manhattan distance
                     # https://en.wikipedia.org/wiki/Taxicab_geometry
                     d = abs(vpos[0] - upos[0]) + abs(vpos[1] - upos[1])
@@ -82,8 +82,9 @@ def solve(maze):
                     # If this new distance is the new shortest path to v
                     if newdistance < distances[vposindex]:
                         vnode = nodeindex[vposindex]
+
                         # v isn't already in the priority queue - add it
-                        if vnode == None:
+                        if vnode is None:
                             vnode = FibHeap.Node(newdistance, v)
                             unvisited.insert(vnode)
                             nodeindex[vposindex] = vnode
@@ -103,7 +104,8 @@ def solve(maze):
 
     path = deque()
     current = end
-    while current != None:
+
+    while current is not None:
         path.appendleft(current)
         current = prev[current.Position[0] * width + current.Position[1]]
 

@@ -8,12 +8,10 @@ def solve(maze):
     width = maze.width
 
     queue = deque([start])
-    shape = (maze.height, maze.width)
     prev = [None] * (maze.width * maze.height)
     visited = [False] * (maze.width * maze.height)
 
     count = 0
-
     completed = False
 
     visited[start.Position[0] * width + start.Position[1]] = True
@@ -27,16 +25,18 @@ def solve(maze):
             break
 
         for n in current.Neighbours:
-            if n != None:
+            if n is not None:
                 npos = n.Position[0] * width + n.Position[1]
-                if visited[npos] == False:
+
+                if not visited[npos]:
                     queue.appendleft(n)
                     visited[npos] = True
                     prev[npos] = current
 
     path = deque()
     current = end
-    while current != None:
+
+    while current is not None:
         path.appendleft(current)
         current = prev[current.Position[0] * width + current.Position[1]]
 

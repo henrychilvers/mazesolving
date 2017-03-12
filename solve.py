@@ -1,5 +1,7 @@
 from PIL import Image
 import time
+import os
+from datetime import datetime
 from mazes import Maze
 from factory import SolverFactory
 
@@ -33,7 +35,7 @@ def solve(factory, method, input_file, output_file):
 
     # Print solve stats
     print("Nodes explored: ", stats[0])
-    if (stats[2]):
+    if stats[2]:
         print("Path found, length", stats[1])
     else:
         print("No Path Found")
@@ -80,11 +82,14 @@ def main():
     parser.add_argument("-m", "--method", nargs='?', const=sf.Default, default=sf.Default,
                         choices=sf.Choices)
     parser.add_argument("input_file")
-    parser.add_argument("output_file")
+    # parser.add_argument("output_file")
     args = parser.parse_args()
 
-    solve(sf, args.method, args.input_file, args.output_file)
+    filename, file_extension = os.path.splitext(args.input_file)
+    output = "{}-{}-solved-{}{}".format(filename, args.method, datetime.now().strftime("%d%m%YT%H%M%S"), file_extension)
 
+    # solve(sf, args.method, args.input_file, args.output_file)
+    solve(sf, args.method, args.input_file, output)
 
 if __name__ == "__main__":
     main()

@@ -1,12 +1,12 @@
-from abc import ABCMeta, abstractmethod
-import itertools
-
-from FibonacciHeap import FibHeap
 import heapq
+from abc import ABCMeta, abstractmethod
+
 import Queue
 
+from FibonacciHeap import FibHeap
 
-class PriorityQueue():
+
+class PriorityQueue:
     __metaclass__ = ABCMeta
 
     @abstractmethod
@@ -56,8 +56,10 @@ class HeapPQ(PriorityQueue):
 
     def insert(self, node):
         entry = node.key, node.value
+
         if entry in self.removed:
             self.removed.discard(entry)
+
         heapq.heappush(self.pq, entry)
         self.count += 1
 
@@ -70,6 +72,7 @@ class HeapPQ(PriorityQueue):
     def removeminimum(self):
         while True:
             (priority, item) = heapq.heappop(self.pq)
+
             if (priority, item) in self.removed:
                 self.removed.discard((priority, item))
             else:
@@ -78,6 +81,7 @@ class HeapPQ(PriorityQueue):
 
     def remove(self, node):
         entry = node.key, node.value
+
         if entry not in self.removed:
             self.removed.add(entry)
             self.count -= 1
@@ -99,8 +103,10 @@ class QueuePQ(PriorityQueue):
 
     def insert(self, node):
         entry = node.key, node.value
+
         if entry in self.removed:
             self.removed.discard(entry)
+
         self.pq.put(entry)
         self.count += 1
 
@@ -113,6 +119,7 @@ class QueuePQ(PriorityQueue):
     def removeminimum(self):
         while True:
             (priority, item) = self.pq.get_nowait()
+
             if (priority, item) in self.removed:
                 self.removed.discard((priority, item))
             else:
@@ -121,6 +128,7 @@ class QueuePQ(PriorityQueue):
 
     def remove(self, node):
         entry = node.key, node.value
+
         if entry not in self.removed:
             self.removed.add(entry)
             self.count -= 1

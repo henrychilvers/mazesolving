@@ -4,14 +4,17 @@ from collections import deque
 def solve(maze):
     start = maze.start
     end = maze.end
+
     width = maze.width
+
     stack = deque([start])
-    shape = (maze.height, maze.width)
+    # shape = (maze.height, maze.width)
     prev = [None] * (maze.width * maze.height)
     visited = [False] * (maze.width * maze.height)
-    count = 0
 
+    count = 0
     completed = False
+
     while stack:
         count += 1
         current = stack.pop()
@@ -26,15 +29,16 @@ def solve(maze):
         # code.interact(local=locals())
 
         for n in current.Neighbours:
-            if n != None:
+            if n is not None:
                 npos = n.Position[0] * width + n.Position[1]
-                if visited[npos] == False:
+                if not visited[npos]:
                     stack.append(n)
                     prev[npos] = current
 
     path = deque()
     current = end
-    while current != None:
+
+    while current is not None:
         path.appendleft(current)
         current = prev[current.Position[0] * width + current.Position[1]]
 

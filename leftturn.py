@@ -6,11 +6,10 @@ def solve(maze):
 
     current = maze.start.Neighbours[2]
 
-    if current == None:
+    if current is None:
         return path
 
     heading = 2  # South
-
     turn = 1  # Turning left, -1 for right
 
     startpos = maze.start.Position
@@ -27,6 +26,7 @@ def solve(maze):
         path.append(current)
         count += 1
         position = current.Position
+
         if position == startpos or position == endpos:
             if position == endpos:
                 completed = True
@@ -34,21 +34,21 @@ def solve(maze):
 
         n = current.Neighbours
 
-        if n[(heading - turn) % 4] != None:
+        if n[(heading - turn) % 4] is not None:
             heading = (heading - turn) % 4
             current = n[heading]
             continue
 
-        if n[heading] != None:
+        if n[heading] is not None:
             current = n[heading]
             continue
 
-        if n[(heading + turn) % 4] != None:
+        if n[(heading + turn) % 4] is not None:
             heading = (heading + turn) % 4
             current = n[heading]
             continue
 
-        if n[(heading + 2) % 4] != None:
+        if n[(heading + 2) % 4] is not None:
             heading = (heading + 2) % 4
             current = n[heading]
             continue
