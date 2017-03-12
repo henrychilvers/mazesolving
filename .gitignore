@@ -4,3 +4,5 @@
 # Text editor temp files
 *~
 \#*\#
+.idea/
+examples/solved/

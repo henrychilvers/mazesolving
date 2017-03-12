@@ -1,8 +1,8 @@
 from FibonacciHeap import FibHeap
 from priority_queue import FibPQ, HeapPQ, QueuePQ
 
-# This implementatoin of A* is almost identical to the Dijkstra implementation. So for clarity I've removed all comments, and only added those
-# Specifically showing the difference between dijkstra and A*
+# This implementation of A* is almost identical to the Dijkstra implementation. So for clarity I've removed all
+# comments, and only added those Specifically showing the difference between dijkstra and A*
 
 def solve(maze):
     width = maze.width
@@ -63,19 +63,20 @@ def solve(maze):
                     # New distance is the distance of the path from the start, through U, to V.
                     newdistance = distances[uposindex] + d
 
-                    # A* includes a remaining cost, the f cost. In this case we use manhattan distance to calculate the distance from
-                    # V to the end. We use manhattan again because A* works well when the g cost and f cost are balanced.
-                    # https://en.wikipedia.org/wiki/Taxicab_geometry
+                    # A* includes a remaining cost, the f cost. In this case we use manhattan distance to calculate
+                    # the distance from V to the end. We use manhattan again because A* works well when the g cost
+                    # and f cost are balanced. https://en.wikipedia.org/wiki/Taxicab_geometry
                     remaining = abs(vpos[0] - endpos[0]) + abs(vpos[1] - endpos[1])
 
-                    # Notice that we don't include f cost in this first check. We want to know that the path *to* our node V is shortest
+                    # Notice that we don't include f cost in this first check. We want to know that the path *to* our
+                    #  node V is shortest
                     if newdistance < distances[vposindex]:
                         vnode = nodeindex[vposindex]
 
                         if vnode == None:
-                            # V goes into the priority queue with a cost of g + f. So if it's moving closer to the end, it'll get higher
-                            # priority than some other nodes. The order we visit nodes is a trade-off between a short path, and moving
-                            # closer to the goal.
+                            # V goes into the priority queue with a cost of g + f. So if it's moving closer to the
+                            # end, it'll get higher priority than some other nodes. The order we visit nodes is a
+                            # trade-off between a short path, and moving closer to the goal.
                             vnode = FibHeap.Node(newdistance + remaining, v)
                             unvisited.insert(vnode)
                             nodeindex[vposindex] = vnode
@@ -83,7 +84,8 @@ def solve(maze):
                             distances[vposindex] = newdistance
                             prev[vposindex] = u
                         else:
-                            # As above, we decrease the node since we've found a new path. But we include the f cost, the distance remaining.
+                            # As above, we decrease the node since we've found a new path. But we include the f cost,
+                            #  the distance remaining.
                             unvisited.decreasekey(vnode, newdistance + remaining)
                             # The distance *to* the node remains just g, no f included.
                             distances[vposindex] = newdistance
@@ -96,7 +98,7 @@ def solve(maze):
 
     path = deque()
     current = end
-    while (current != None):
+    while current != None:
         path.appendleft(current)
         current = prev[current.Position[0] * width + current.Position[1]]
 

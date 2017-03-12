@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def solve(maze):
     start = maze.start
     end = maze.end
@@ -35,7 +36,7 @@ def solve(maze):
 
     path = deque()
     current = end
-    while (current != None):
+    while current != None:
         path.appendleft(current)
         current = prev[current.Position[0] * width + current.Position[1]]
 

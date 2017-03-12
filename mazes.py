@@ -41,7 +41,8 @@ class Maze:
             leftnode = None
 
             for x in range (1, width - 1):
-                # Move prev, current and next onwards. This way we read from the image once per pixel, marginal optimisation
+                # Move prev, current and next onwards. This way we read from the image once per pixel, marginal
+                # optimisation
                 prv = cur
                 cur = nxt
                 nxt = data[rowoffset + x + 1] > 0
@@ -69,7 +70,7 @@ class Maze:
                         n.Neighbours[3] = leftnode
                         leftnode = None
                 else:
-                    if nxt == True:
+                    if nxt:
                         # WALL PATH PATH
                         # Create path at start of corridor
                         n = Maze.Node((y,x))
@@ -78,19 +79,19 @@ class Maze:
                         # WALL PATH WALL
                         # Create node only if in dead end
                         if (data[rowaboveoffset + x] == 0) or (data[rowbelowoffset + x] == 0):
-                            #print ("Create Node in dead end")
+                            # print ("Create Node in dead end")
                             n = Maze.Node((y,x))
 
                 # If node isn't none, we can assume we can connect N-S somewhere
                 if n != None:
                     # Clear above, connect to waiting top node
-                    if (data[rowaboveoffset + x] > 0):
+                    if data[rowaboveoffset + x] > 0:
                         t = topnodes[x]
                         t.Neighbours[2] = n
                         n.Neighbours[0] = t
 
                     # If clear below, put this new node in the top row for the next connection
-                    if (data[rowbelowoffset + x] > 0):
+                    if data[rowbelowoffset + x] > 0:
                         topnodes[x] = n
                     else:
                         topnodes[x] = None

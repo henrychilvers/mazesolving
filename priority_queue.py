@@ -1,10 +1,10 @@
-
 from abc import ABCMeta, abstractmethod
 import itertools
 
 from FibonacciHeap import FibHeap
 import heapq
 import Queue
+
 
 class PriorityQueue():
     __metaclass__ = ABCMeta
@@ -24,6 +24,7 @@ class PriorityQueue():
     @abstractmethod
     def decreasekey(self, node, new_priority): pass
 
+
 class FibPQ(PriorityQueue):
     def __init__(self):
         self.heap = FibHeap()
@@ -42,6 +43,7 @@ class FibPQ(PriorityQueue):
 
     def decreasekey(self, node, new_priority):
         self.heap.decreasekey(node, new_priority)
+
 
 class HeapPQ(PriorityQueue):
     def __init__(self):
@@ -127,4 +129,3 @@ class QueuePQ(PriorityQueue):
         self.remove(node)
         node.key = new_priority
         self.insert(node)
-

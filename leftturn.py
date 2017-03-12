@@ -1,7 +1,7 @@
 from collections import deque
 
-def solve(maze):
 
+def solve(maze):
     path = deque([maze.start])
 
     current = maze.start.Neighbours[2]
@@ -9,9 +9,9 @@ def solve(maze):
     if current == None:
         return path
 
-    heading = 2 # South
+    heading = 2  # South
 
-    turn = 1 # Turning left, -1 for right
+    turn = 1  # Turning left, -1 for right
 
     startpos = maze.start.Position
     endpos = maze.end.Position
@@ -22,7 +22,6 @@ def solve(maze):
     count = 1
 
     completed = False
-
 
     while True:
         path.append(current)

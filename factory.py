@@ -1,10 +1,11 @@
 # A simple factory class that imports and returns a relevant solver when provided a string
 # Not hugely necessary, but reduces the code in solve.py, making it easier to read.
 
+
 class SolverFactory:
     def __init__(self):
         self.Default = "breadthfirst"
-        self.Choices = ["breadthfirst","depthfirst","dijkstra", "astar","leftturn"]
+        self.Choices = ["breadthfirst", "depthfirst", "dijkstra", "astar", "leftturn"]
 
     def createsolver(self, type):
         if type == "leftturn":
